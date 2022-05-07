@@ -14,7 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.jonathankalonga.jokaltemplaite.models.Shop
 import com.jonathankalonga.jokaltemplaite.models.shoesProduct
 import com.jonathankalonga.jokaltemplaite.ui.AppBarCollapsedHeight
@@ -52,15 +55,27 @@ fun ParalaxToolBar(shop: Shop) {
     TopAppBar(
         contentPadding = PaddingValues(),
         backgroundColor = Color.White,
-        modifier = Modifier.height(imageHeight)
+        modifier = Modifier.height(AppBarExpendedHeight)
     ) {
         Column {
-            Box {
+            Box(modifier = Modifier.height(imageHeight)){
                 Image(painter = painterResource(id =R.drawable.shop ),
                     contentDescription ="shop image",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
+            }
+
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .height(AppBarCollapsedHeight),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = shop.name,
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 16.dp))
             }
         }
     }
