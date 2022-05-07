@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -11,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -63,6 +65,14 @@ fun ParalaxToolBar(shop: Shop) {
                     contentDescription ="shop image",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
+                )
+                Box(modifier = Modifier.fillMaxSize()
+                    .background(Brush.verticalGradient(
+                        colorStops = arrayOf(
+                            Pair(0.4f, Color.Transparent),
+                            Pair(1f,Color.White)
+                        )
+                    ))
                 )
             }
 
