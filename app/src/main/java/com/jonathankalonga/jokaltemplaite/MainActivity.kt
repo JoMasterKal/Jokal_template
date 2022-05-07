@@ -66,6 +66,8 @@ fun ParalaxToolBar(shop: Shop) {
                 )
             }
 
+
+
             Column(
                 Modifier
                     .fillMaxSize()
