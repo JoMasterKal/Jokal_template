@@ -11,7 +11,9 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -25,6 +27,7 @@ import com.jonathankalonga.jokaltemplaite.models.shoesProduct
 import com.jonathankalonga.jokaltemplaite.ui.AppBarCollapsedHeight
 import com.jonathankalonga.jokaltemplaite.ui.AppBarExpendedHeight
 import com.jonathankalonga.jokaltemplaite.ui.theme.JokalTemplaiteTheme
+import com.jonathankalonga.jokaltemplaite.ui.theme.Shapes
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,23 +63,41 @@ fun ParalaxToolBar(shop: Shop) {
         modifier = Modifier.height(AppBarExpendedHeight)
     ) {
         Column {
+            //put background image
             Box(modifier = Modifier.height(imageHeight)){
                 Image(painter = painterResource(id =R.drawable.shop ),
                     contentDescription ="shop image",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
-                Box(modifier = Modifier.fillMaxSize()
-                    .background(Brush.verticalGradient(
-                        colorStops = arrayOf(
-                            Pair(0.4f, Color.Transparent),
-                            Pair(1f,Color.White)
+                //add transparent space
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            colorStops = arrayOf(
+                                Pair(0.4f, Color.Transparent),
+                                Pair(1f, Color.White)
+                            )
                         )
-                    ))
+                    )
                 )
+
+                //add category name
+                Row(modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.Bottom
+                ){
+                    Text(text = shop.category,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .clip(Shapes.small)
+                        .background(Color.LightGray)
+                        .padding(vertical = 6.dp, horizontal = 16.dp))
+
+                }
             }
-
-
 
             Column(
                 Modifier
