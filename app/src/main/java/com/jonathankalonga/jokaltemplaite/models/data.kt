@@ -7,6 +7,8 @@ data class Shop(
     val name : String,
     val category : String,
     val adresse: String,
+    val city : String,
+    val livrateTIme : String,
     val rating: String,
     val description :String,
     val shoes : List<Product>
@@ -22,6 +24,8 @@ val shoesProduct = Shop(
     name = "Lina boutique",
     category = "Habillement",
     adresse = "kasangulu n5,kabuya",
+    city = "Lubumbashi",
+    livrateTIme = "12H",
     rating= "4.9",
     description = "Boutique d'habillement chic et class, la haute qualitE",
     shoes = listOf(
