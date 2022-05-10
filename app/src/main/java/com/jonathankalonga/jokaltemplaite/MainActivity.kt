@@ -3,13 +3,11 @@ package com.jonathankalonga.jokaltemplaite
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,12 +20,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material.ButtonDefaults
 import com.jonathankalonga.jokaltemplaite.models.Shop
 import com.jonathankalonga.jokaltemplaite.models.shoesProduct
 import com.jonathankalonga.jokaltemplaite.ui.AppBarCollapsedHeight
 import com.jonathankalonga.jokaltemplaite.ui.AppBarExpendedHeight
 import com.jonathankalonga.jokaltemplaite.ui.theme.JokalTemplaiteTheme
 import com.jonathankalonga.jokaltemplaite.ui.theme.Shapes
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,6 +113,42 @@ fun ParalaxToolBar(shop: Shop) {
         }
     }
 
+    //add navigation button to topAppbar
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(AppBarCollapsedHeight)
+            .padding(16.dp)
+
+    ) {
+        CircularButton(R.drawable.ic_arrow_back)
+        CircularButton(R.drawable.ic_shopping)
+
+    }
+
+
+}
+
+@Composable
+fun CircularButton(
+    @DrawableRes iconRes : Int,
+    color: Color = Color.Gray,
+    elevation: ButtonElevation = ButtonDefaults.elevation(),
+    onClick: () -> Unit = {}
+) {
+    Button(onClick = onClick,
+    contentPadding = PaddingValues(),
+    shape = Shapes.small,
+    colors = ButtonDefaults.buttonColors(
+        backgroundColor = Color.White,
+        contentColor = Color.Gray),
+    elevation = elevation,
+    modifier = Modifier.width(38.dp).height(38.dp)) {
+       Icon(painter =  painterResource(id = iconRes), contentDescription = null)
+        
+    }
 }
 
 @Composable

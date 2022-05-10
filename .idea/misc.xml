@@ -5,7 +5,11 @@
       <map>
         <entry key="../../../../../layout/compose-model-1651868046974.xml" value="0.11148648648648649" />
         <entry key="../../../../../layout/compose-model-1651901480700.xml" value="0.335" />
-        <entry key="../../../../../layout/compose-model-1651994103727.xml" value="0.25" />
+        <entry key="../../../../../layout/compose-model-1651994103727.xml" value="0.335" />
+        <entry key="../../../../../layout/compose-model-1652193260294.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_arrow_back_.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_shopping.xml" value="0.1" />
       </map>
     </option>
   </component>
