@@ -1,5 +1,6 @@
 package com.jonathankalonga.jokaltemplaite
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -7,6 +8,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,6 +27,7 @@ import com.jonathankalonga.jokaltemplaite.models.Shop
 import com.jonathankalonga.jokaltemplaite.models.shoesProduct
 import com.jonathankalonga.jokaltemplaite.ui.AppBarCollapsedHeight
 import com.jonathankalonga.jokaltemplaite.ui.AppBarExpendedHeight
+import com.jonathankalonga.jokaltemplaite.ui.theme.Green
 import com.jonathankalonga.jokaltemplaite.ui.theme.JokalTemplaiteTheme
 import com.jonathankalonga.jokaltemplaite.ui.theme.Shapes
 
@@ -145,7 +148,9 @@ fun CircularButton(
         backgroundColor = Color.White,
         contentColor = Color.Gray),
     elevation = elevation,
-    modifier = Modifier.width(38.dp).height(38.dp)) {
+    modifier = Modifier
+        .width(38.dp)
+        .height(38.dp)) {
        Icon(painter =  painterResource(id = iconRes), contentDescription = null)
         
     }
@@ -153,7 +158,43 @@ fun CircularButton(
 
 @Composable
 fun Content(shop: Shop){
+    LazyColumn(contentPadding = PaddingValues(top = AppBarExpendedHeight)){
+        item{
+            BasicInfo(shop)
+        }
+    }
 
+}
+
+//info row
+@Composable
+fun BasicInfo(shop: Shop) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 16.dp)
+    ) {
+        InfoColumn(R.drawable.ic_shipping_car,shop.livrateTIme)
+        InfoColumn(R.drawable.ic_location,shop.city)
+        InfoColumn(R.drawable.ic_star,shop.rating)
+    }
+}
+
+//content of info
+@Composable
+fun InfoColumn(@DrawableRes iconRes: Int, text:String) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+
+    ) {
+        Icon(painter = painterResource(id = iconRes), 
+            contentDescription = null, 
+            tint = Green,
+            modifier = Modifier.height(24.dp)
+        )
+        Text(text = text, fontWeight = FontWeight.Bold)
+    }
 }
 
 @Preview(showBackground = true, widthDp = 300, heightDp = 1400)

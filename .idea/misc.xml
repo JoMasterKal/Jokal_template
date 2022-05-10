@@ -7,9 +7,15 @@
         <entry key="../../../../../layout/compose-model-1651901480700.xml" value="0.335" />
         <entry key="../../../../../layout/compose-model-1651994103727.xml" value="0.335" />
         <entry key="../../../../../layout/compose-model-1652193260294.xml" value="0.25" />
+        <entry key="../../../../../layout/compose-model-1652197931505.xml" value="0.25" />
+        <entry key="../../../../../layout/compose-model-1652198541364.xml" value="0.25" />
         <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_arrow_back_.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_location.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_shipping_car.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_shopping.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_star.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_star_rate.xml" value="0.1" />
       </map>
     </option>
   </component>
