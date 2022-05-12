@@ -27,7 +27,9 @@ val shoesProduct = Shop(
     city = "Lubumbashi",
     livrateTIme = "12H",
     rating= "4.9",
-    description = "Boutique d'habillement chic et class, la haute qualitE",
+    description = "Boutique d\'habillement chic et classe, la haute qualité, " +
+            "produit vennant de l\'Europe, de l\'Asie, l\'Amerique. Nous sommes la pour vous servir" +
+            "de la bonne qualité",
     shoes = listOf(
         Product(R.drawable.all_star, "All Star",45.00, "chaussure de qualitE"),
         Product(R.drawable.jordan, "Air Jordan",65.00, "chaussure de qualitE"),
