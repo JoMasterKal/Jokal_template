@@ -9,6 +9,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,9 +28,7 @@ import com.jonathankalonga.jokaltemplaite.models.Shop
 import com.jonathankalonga.jokaltemplaite.models.shoesProduct
 import com.jonathankalonga.jokaltemplaite.ui.AppBarCollapsedHeight
 import com.jonathankalonga.jokaltemplaite.ui.AppBarExpendedHeight
-import com.jonathankalonga.jokaltemplaite.ui.theme.Green
-import com.jonathankalonga.jokaltemplaite.ui.theme.JokalTemplaiteTheme
-import com.jonathankalonga.jokaltemplaite.ui.theme.Shapes
+import com.jonathankalonga.jokaltemplaite.ui.theme.*
 
 
 class MainActivity : ComponentActivity() {
@@ -96,7 +95,7 @@ fun ParalaxToolBar(shop: Shop) {
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier
                         .clip(Shapes.small)
-                        .background(Color.LightGray)
+                        .background(LightGray)
                         .padding(vertical = 6.dp, horizontal = 16.dp))
 
                 }
@@ -161,9 +160,60 @@ fun Content(shop: Shop){
     LazyColumn(contentPadding = PaddingValues(top = AppBarExpendedHeight)){
         item{
             BasicInfo(shop)
+            DescriptionShop(shop)
+            menuHedear()
         }
     }
 
+}
+
+@Composable
+fun menuHedear() {
+    LazyRow(
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .padding(vertical = 16.dp, horizontal = 16.dp)
+            .clip(shape = Shapes.medium)
+            .background(LightGray)
+            .fillMaxWidth()
+            .height(44.dp)
+    ){
+        item {
+            tabButton("chaussure",true, Modifier)
+            tabButton("chemises",false, Modifier)
+            tabButton("pantantallon",false, Modifier)
+        }
+    }
+}
+
+@Composable
+fun tabButton(text: String, active: Boolean, modifier: Modifier) {
+    Button(onClick = { /*TODO*/ },
+        shape = Shapes.medium,
+        modifier = modifier.fillMaxHeight(),
+        elevation = null,
+        colors = if(active) ButtonDefaults.buttonColors(
+            backgroundColor = Green,
+            contentColor = White
+        ) else ButtonDefaults.buttonColors(
+            backgroundColor = LightGray,
+            contentColor = DarkGray
+        )
+
+        ) {
+        Text(text = text)
+    }
+}
+
+@Composable
+fun DescriptionShop(shop: Shop) {
+    Text(
+        text = shop.description,
+        fontWeight = FontWeight.Medium,
+        modifier = Modifier.padding(vertical = 16.dp, horizontal = 16.dp)
+
+    )
 }
 
 //info row
