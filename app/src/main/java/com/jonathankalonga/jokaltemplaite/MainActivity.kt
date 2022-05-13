@@ -161,16 +161,51 @@ fun Content(shop: Shop){
         item{
             BasicInfo(shop)
             DescriptionShop(shop)
-            menuHedear()
+            MenuHedear()
+            ProductList()
         }
     }
 
 }
 
 @Composable
-fun menuHedear() {
+fun ProductList() {
+    ProductCard(R.drawable.all_star,"title","sub title",Modifier)
+}
+
+@Composable
+fun ProductCard(
+    @DrawableRes imageRes:Int,
+    title: String,
+    subTitle: String,
+    modifier: Modifier) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(16.dp)
+    ){
+        Card(
+            backgroundColor = LightGray,
+            shape = Shapes.large,
+            modifier = Modifier
+                .padding(8.dp)
+                .width(100.dp)
+                .height(100.dp)
+        ) {
+            Image(painter = painterResource(
+                id = imageRes),
+                contentDescription = null,
+                modifier.fillMaxWidth().fillMaxHeight())
+        }
+        Text(text = title,modifier.width(100.dp), fontWeight = FontWeight.Medium, fontSize = 14.sp)
+        Text(text = subTitle,modifier.width(100.dp), color = Gray, fontSize = 14.sp)
+
+    }
+}
+
+@Composable
+fun MenuHedear() {
     LazyRow(
-        horizontalArrangement = Arrangement.SpaceEvenly,
+       // horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .padding(vertical = 16.dp, horizontal = 16.dp)
