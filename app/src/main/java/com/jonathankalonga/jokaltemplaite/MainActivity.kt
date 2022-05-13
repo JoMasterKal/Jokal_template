@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.ButtonDefaults
 import com.jonathankalonga.jokaltemplaite.models.Shop
-import com.jonathankalonga.jokaltemplaite.models.shoesProduct
+import com.jonathankalonga.jokaltemplaite.models.linaBoutique
 import com.jonathankalonga.jokaltemplaite.ui.AppBarCollapsedHeight
 import com.jonathankalonga.jokaltemplaite.ui.AppBarExpendedHeight
 import com.jonathankalonga.jokaltemplaite.ui.theme.*
@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MyApp(shoesProduct)
+                    MyApp(linaBoutique)
                 }
             }
         }
@@ -162,22 +162,48 @@ fun Content(shop: Shop){
             BasicInfo(shop)
             DescriptionShop(shop)
             MenuHedear()
-            ProductList()
+            ProductList(linaBoutique)
+            AllProducts()
         }
     }
 
 }
 
 @Composable
-fun ProductList() {
-    ProductCard(R.drawable.all_star,"title","sub title",Modifier)
+fun AllProducts() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp, horizontal = 16.dp),
+    horizontalArrangement = Arrangement.SpaceBetween) {
+        
+        Column() {
+            Text(text = "Shoes", fontWeight = FontWeight.Bold)
+            Text(text = "450", color = DarkGray)
+        }
+        
+        Button(onClick = { /*TODO*/ }) {
+            
+        }
+
+    }
+}
+
+@Composable
+fun ProductList(shop:Shop) {
+    ProductGrid(nColumn = 3, item = shop.shoes,) {
+        ProductCard(it.image,it.name,it.price,Modifier)
+
+
+
+    }
 }
 
 @Composable
 fun ProductCard(
     @DrawableRes imageRes:Int,
     title: String,
-    subTitle: String,
+    price: Double,
     modifier: Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -194,10 +220,35 @@ fun ProductCard(
             Image(painter = painterResource(
                 id = imageRes),
                 contentDescription = null,
-                modifier.fillMaxWidth().fillMaxHeight())
+                modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight())
         }
         Text(text = title,modifier.width(100.dp), fontWeight = FontWeight.Medium, fontSize = 14.sp)
-        Text(text = subTitle,modifier.width(100.dp), color = Gray, fontSize = 14.sp)
+        Text(text = price.toString(),modifier.width(100.dp), color = Gray, fontSize = 14.sp)
+
+    }
+}
+
+@Composable
+fun <T>ProductGrid(nColumn:Int,item:List<T>, content: @Composable (T)-> Unit) {
+    Column(modifier = Modifier.padding(16.dp)) {
+        for (i in item.indices step nColumn) {
+            Row {
+                for (j in 0 until nColumn) {
+                    if(i+j < item.size) {
+                        Box(
+                            contentAlignment = Alignment.TopCenter,
+                            modifier = Modifier.weight(1f)
+                        ){
+                            content(item[i+j])
+                        }
+                    }else {
+                        Spacer(modifier = Modifier.weight(1f, fill = true))
+                    }
+                }
+            }
+        }
 
     }
 }
@@ -286,6 +337,6 @@ fun InfoColumn(@DrawableRes iconRes: Int, text:String) {
 @Composable
 fun DefaultPreview() {
     JokalTemplaiteTheme {
-        MyApp(shoesProduct)
+        MyApp(linaBoutique)
     }
 }
