@@ -182,7 +182,13 @@ fun AllProducts() {
             Text(text = "450", color = DarkGray)
         }
         
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { /*TODO*/ }, elevation = null, colors = ButtonDefaults.buttonColors(
+            contentColor = Green, backgroundColor = Transparent
+        )) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(text = "See All")
+                Icon(painter = painterResource(id = R.drawable.ic_arrow_right), contentDescription = null)
+            }
             
         }
 

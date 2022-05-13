@@ -20,7 +20,7 @@ data class Product(
     val price: Double,
     val description: String )
 
-val shoesProduct = Shop(
+val linaBoutique = Shop(
     name = "Lina boutique",
     category = "Habillement",
     adresse = "kasangulu n5,kabuya",
