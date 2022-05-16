@@ -6,10 +6,13 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,24 +27,37 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.IntOffset
+import androidx.core.view.WindowCompat
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.statusBarsPadding
 import com.jonathankalonga.jokaltemplaite.models.Shop
 import com.jonathankalonga.jokaltemplaite.models.linaBoutique
 import com.jonathankalonga.jokaltemplaite.ui.AppBarCollapsedHeight
 import com.jonathankalonga.jokaltemplaite.ui.AppBarExpendedHeight
 import com.jonathankalonga.jokaltemplaite.ui.theme.*
+import kotlin.math.max
+import kotlin.math.min
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             JokalTemplaiteTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    MyApp(linaBoutique)
+                ProvideWindowInsets {
+                    Surface(
+                        //modifier = Modifier.fillMaxSize(),
+                        color = White
+                    ) {
+                        MyApp(linaBoutique)
+                    }
                 }
             }
         }
@@ -50,19 +66,34 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp(shop: Shop) {
+
+    val scrollState = rememberLazyListState()
+
     Box() {
-        Content(shop)
-        ParalaxToolBar(shop)
+        Content(shop, scrollState)
+        ParalaxToolBar(shop, scrollState)
     }
 }
 
 @Composable
-fun ParalaxToolBar(shop: Shop) {
+fun ParalaxToolBar(shop: Shop, scrollState: LazyListState) {
+    //add offset logics
     val imageHeight = AppBarExpendedHeight - AppBarCollapsedHeight
+
+    val maxOffset = with(LocalDensity.current) {imageHeight.roundToPx()} - LocalWindowInsets.current.systemBars.layoutInsets.top
+
+    val offset = min(scrollState.firstVisibleItemScrollOffset, maxOffset)
+
+    val offsetProgress = max(0f, offset * 3f - 2f * maxOffset) / maxOffset
+
+
     TopAppBar(
         contentPadding = PaddingValues(),
         backgroundColor = Color.White,
-        modifier = Modifier.height(AppBarExpendedHeight)
+        modifier = Modifier
+            .height(AppBarExpendedHeight)
+            .offset { IntOffset(x=0,y = -offset) },
+        elevation = if(offset == maxOffset) 4.dp else 0.dp
     ) {
         Column {
             //put background image
@@ -110,7 +141,9 @@ fun ParalaxToolBar(shop: Shop) {
                 Text(text = shop.name,
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 16.dp))
+                    modifier = Modifier.
+                    padding(horizontal = (16 + 28 * offsetProgress).dp)
+                        .scale(1f - 0.25f * offsetProgress))
             }
         }
     }
@@ -122,6 +155,7 @@ fun ParalaxToolBar(shop: Shop) {
         modifier = Modifier
             .fillMaxWidth()
             .height(AppBarCollapsedHeight)
+            .statusBarsPadding()
             .padding(16.dp)
 
     ) {
@@ -156,17 +190,46 @@ fun CircularButton(
 }
 
 @Composable
-fun Content(shop: Shop){
-    LazyColumn(contentPadding = PaddingValues(top = AppBarExpendedHeight)){
+fun Content(shop: Shop, scrollState: LazyListState){
+    LazyColumn(contentPadding = PaddingValues(top = AppBarExpendedHeight), state = scrollState){
         item{
             BasicInfo(shop)
             DescriptionShop(shop)
             MenuHedear()
             ProductList(linaBoutique)
             AllProducts()
+            SpaceImage()
         }
     }
 
+}
+
+@Composable
+fun SpaceImage() {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .height(150.dp)) {
+        Image(painter = painterResource(
+            id = R.drawable.bottom),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(Shapes.small)
+
+        )
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    colorStops = arrayOf(
+                        Pair(0.4f, Color.Transparent),
+                        Pair(1f, Green)
+                    )
+                )
+            )
+        )
+    }
 }
 
 @Composable
